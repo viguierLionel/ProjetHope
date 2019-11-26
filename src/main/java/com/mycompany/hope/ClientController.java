@@ -7,6 +7,9 @@ package com.mycompany.hope;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,21 +33,34 @@ public class ClientController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ClientController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ClientController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String action = request.getParameter("action");
+	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
+	//String code = request.getParameter("code"); Pour recuperer des paramrtres
+	//String taux = request.getParameter("taux");
+		try {
+			DAO dao = new DAO(DataSourceFactory.getDataSource());
+			request.setAttribute("Produit", dao.allProducts());			
+			switch (action) {
+				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
+					request.getRequestDispatcher("connexion.jsp").forward(request, response);						
+					break;
+				case "DELETE": // Requête de suppression (vient du lien hypertexte)
+					request.getRequestDispatcher("inscription.jsp").forward(request, response);
+					break;
+			}
+		} catch (Exception ex) {
+			Logger.getLogger("Client").log(Level.SEVERE, "Action en erreur", ex);
+			request.setAttribute("message", ex.getMessage());
+		} finally {
+
+		}
+		// On continue vers la page JSP sélectionnée
+		request.getRequestDispatcher("Main.jsp").forward(request, response);
+	}
         }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -85,4 +101,4 @@ public class ClientController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}
+
