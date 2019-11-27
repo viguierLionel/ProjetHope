@@ -13,7 +13,7 @@
         <h1>EcoPlusPlus</h1>
         <div class="connexion">
         	<form method='GET'>
-			<input type="hidden" name="action" value="CONNEXION">
+			<input type="hidden" name="Connexion.jsp">
 			<input type="submit" value="Connexion">
 		</form>
         </div>
@@ -22,7 +22,7 @@
             <form>
                   <p>
                      <label>Select list</label>
-                     <select id = "myList">
+                     <select id = "listeCategorie">
                        <option name="catego" value = "Tous">Tous</option>
                        <option name="catego" value = "Produit">Produit secs</option>
                        <option name="catego" value = "Boisson">Boisson</option>
