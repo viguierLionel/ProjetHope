@@ -6,13 +6,30 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="Main.css">
         <title>EcoPlusPlus</title>
     </head>
     <body>
         <h1>EcoPlusPlus</h1>
+        <div class="connexion">
         	<form method='GET'>
 			<input type="hidden" name="action" value="CONNEXION">
 			<input type="submit" value="Connexion">
 		</form>
+        </div>
+
+    	<div>
+            <form>
+                  <p>
+                     <label>Select list</label>
+                     <select id = "myList">
+                       <option name="catego" value = "Tous">Tous</option>
+                       <option name="catego" value = "Produit">Produit secs</option>
+                       <option name="catego" value = "Boisson">Boisson</option>
+                       <option name="catego" value = "Viande">Viande</option>
+                     </select>
+                  </p>
+            </form>
+	</div>
     </body>
 </html>
