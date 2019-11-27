@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pedago
  */
-@WebServlet(name = "Client", urlPatterns = {"/Client"})
-public class ClientController extends HttpServlet {
+@WebServlet(name = "Visiteur", urlPatterns = {"/Visiteur"})
+public class VisiteurController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,19 +37,18 @@ public class ClientController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-	//String code = request.getParameter("code"); Pour recuperer des paramrtres
-	//String taux = request.getParameter("taux");
+	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Produit", dao.allProducts());			
-			switch (action) {
+			request.setAttribute("Produit", dao.allProducts(cat));
+			/**switch (action) {
 				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
-					request.getRequestDispatcher("connexion.jsp").forward(request, response);						
+					request.getRequestDispatcher("Connexion.jsp").forward(request, response);						
 					break;
 				case "DELETE": // Requête de suppression (vient du lien hypertexte)
-					request.getRequestDispatcher("inscription.jsp").forward(request, response);
+					request.getRequestDispatcher("Inscription.jsp").forward(request, response);
 					break;
-			}
+			}**/
 		} catch (Exception ex) {
 			Logger.getLogger("Client").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
