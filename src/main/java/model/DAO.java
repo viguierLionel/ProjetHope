@@ -66,7 +66,9 @@ public class DAO {
         }
             
         /**
-         * 
+         * Permet d'avoir tout les produits en fonction d'une catégorie ou d'un mot clé de catégorie
+         * (mot clé -> partie d'un no de catégorie)
+         * @return Liste de produit
          * @throws SQLException renvoyées par JDBC
          */
         public List<Produit> allProducts(String cat) throws SQLException {
@@ -88,7 +90,9 @@ public class DAO {
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
                             int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
                             boolean indispo=rs.getInt("INDISPONIBLE")==1;
-                            ;
+                            Produit p = new Produit(nProduit, fournisseur,categorie,prixUnitaire,quantiteParUnite,
+                                                        unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
+				result.add(p);
                         }
             }
             return result;
