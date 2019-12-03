@@ -37,10 +37,17 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
+	String username = request.getParameter("usr");// pour recuperer le nom d'utilisateur
+	String passwd = request.getParameter("passwd");// pour recuperer le nom d'utilisateur
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Produit", dao.allProducts(cat));
+			if(dao.login(username,passwd)){
+                            if(dao.estAdmin(passwd)){
+                            request.getRequestDispatcher("MainAdmin.jsp").forward(request, response);
+                            }
+                            else{ request.getRequestDispatcher("MainClient.jsp").forward(request, response);}
+                        }
+                        request.setAttribute("Message", "échec d'autantification");//on envoie un message d'erreur si l'utilisateur ne peut pas se connecter
 			
 		} catch (Exception ex) {
 			Logger.getLogger("Client").log(Level.SEVERE, "Action en erreur", ex);

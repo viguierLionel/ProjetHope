@@ -40,15 +40,15 @@ public class VisiteurController extends HttpServlet {
 	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Produit", dao.allProducts(cat));
-			/**switch (action) {
+			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
+			switch (action) {
 				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
-					request.getRequestDispatcher("Connexion.jsp").forward(request, response);						
+					request.getRequestDispatcher("Visiteur/Connexion.jsp").forward(request, response);						
 					break;
-				case "DELETE": // Requête de suppression (vient du lien hypertexte)
-					request.getRequestDispatcher("Inscription.jsp").forward(request, response);
+				case "INSCRIPTION": // Requête de suppression (vient du lien hypertexte)
+					request.getRequestDispatcher("Visiteur/Inscription.jsp").forward(request, response);
 					break;
-			}**/
+			}
 		} catch (Exception ex) {
 			Logger.getLogger("Client").log(Level.SEVERE, "Action en erreur", ex);
 			request.setAttribute("message", ex.getMessage());
