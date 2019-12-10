@@ -7,17 +7,32 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="Main.css">
+        <link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap-grid.css">
         <title>EcoPlusPlus</title>
-    </head>
-    <body>
-        <h1>EcoPlusPlus</h1>
-        <div class="connexion">
-        	<form method='GET'>
-                    <input type="hidden" name="action" value="CONNEXION">
-			<input type="submit" value="Connexion">
-		</form>
-        </div>
+        <style>
 
+        </style>
+    </head>
+    <body> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="span1 offset-10">
+                    <form method='GET'>
+                        <input type="hidden" name="action" value="CONNEXION" >
+                        <input type="submit" value="Connexion">
+                    </form>
+                </div>
+
+                <div class="span1">
+                    <form method='GET'>
+                        <input type="hidden" name="action" value="INSCRIPTION" >
+                        <input type="submit" value="inscription">
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+            <img src ="../Images/LogoEcoPlusPlus.png" alt="ECO PLUS PLUS" class="logo">
     	<div>
             <form>
                   <p>

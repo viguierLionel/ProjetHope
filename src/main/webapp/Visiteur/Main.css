@@ -1,22 +1,15 @@
-.table{
-    display:table;
-    border-collapse:separate;
-    border-spacing:2px;
+.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-.thead{
-    display:table-header-group;
-    color:white;
-    font-weight:bold;
-    background-color:grey;
+.connexion{
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }
-.tbody{				
-    display:table-row-group;
-}
-.tr{
-    display:table-row;
-}
-.td{
-    display:table-cell;
-    border:1px solid black;
-    padding:1px;
+.inscription{
+    position: absolute;
+    right: 150px;
+    top: 5px;
 }
