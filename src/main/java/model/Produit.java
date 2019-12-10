@@ -11,26 +11,33 @@ package model;
  */
 public class Produit {
     
+    private int reference;
     private String nProduit;
     private int fournisseur;
     private int categorie;
-    private float prixUnitaire;
-    private float quantiteParUnite;
+    private String quantiteParUnite;
+    private double prixUnitaire;
     private int unitesEnStock;
     private int unites_Commandees;
     private int niveauReaprovi;
     private boolean indisponible;
 
-    public Produit(String nProduit, int fournisseur, int categorie, float prixUnitaire, float quantiteParUnite, int unitesEnStock, int unites_Commandees, int niveauReaprovi, boolean indisponible) {
+    public Produit(int reference,String nProduit, int fournisseur, int categorie, String quantiteParUnite, double prixUnitaire, int unitesEnStock, int unites_Commandees, int niveauReaprovi, int indisponible) {
+        this.reference=reference;
         this.nProduit = nProduit;
         this.fournisseur = fournisseur;
         this.categorie = categorie;
-        this.prixUnitaire = prixUnitaire;
         this.quantiteParUnite = quantiteParUnite;
+        this.prixUnitaire = prixUnitaire;
         this.unitesEnStock = unitesEnStock;
         this.unites_Commandees = unites_Commandees;
         this.niveauReaprovi = niveauReaprovi;
-        this.indisponible = indisponible;
+        if (indisponible ==1){
+            this.indisponible = true;
+        }
+        else{
+            this.indisponible = false;
+        }
     }
     
     

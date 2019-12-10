@@ -49,33 +49,61 @@ public class DAO {
         
         //PRODUIT ****************************************************************************************************************************
         
+        public Produit selectProduct(int reference) throws SQLException {
+            Produit resultat = null;
+            String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+            
+            try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, reference);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            String nProduit=rs.getString("NOM");
+                            int fournisseur=rs.getInt("FOURNISSEUR");
+                            int categorie=rs.getInt("CATEGORIE");
+                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
+                            int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
+                            int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            int indispo=rs.getInt("INDISPONIBLE");
+                            Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
+                                                        unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
+                            resultat = p;
+                        }
+            }
+            return resultat;
+        }
+        
         /**
          * permet d'avoir une liste de produits dont le nom possède le mot clé entré en argument
          * @return ou liste de produits
          * @throws java.sql.SQLException renvoyées par JDBC
          */
-        public List<Produit> selectProduct(String nom) throws SQLException {
+        public List<Produit> selectNomProduct(String nom) throws SQLException {
             List<Produit> result = new LinkedList<>();
             
             String sql = "SELECT * FROM PRODUIT WHERE Nom LIKE '%?%'";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, nom);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-                           String nProduit=rs.getString("NOM");
+                            int reference=rs.getInt("REFERENCE");
+                            String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            float prixUnitaire=rs.getFloat("PRIX_UNITAIRE");
-                            float quantiteParUnite=rs.getFloat("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
                             int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
-                            boolean indispo=rs.getInt("INDISPONIBLE")==1;
-                            Produit p = new Produit(nProduit, fournisseur,categorie,prixUnitaire,quantiteParUnite,
+                            int indispo=rs.getInt("INDISPONIBLE");
+                            Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
 			result.add(p);
                         }
-            }
+                }
             return result;
         }
             
@@ -94,18 +122,19 @@ public class DAO {
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+                            int reference=rs.getInt("REFERENCE");
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            float prixUnitaire=rs.getFloat("PRIX_UNITAIRE");
-                            float quantiteParUnite=rs.getFloat("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
                             int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
-                            boolean indispo=rs.getInt("INDISPONIBLE")==1;
-                            Produit p = new Produit(nProduit, fournisseur,categorie,prixUnitaire,quantiteParUnite,
+                            int indispo=rs.getInt("INDISPONIBLE");
+                            Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
-				result.add(p);
+                            result.add(p);
                             }
             }
             return result;
@@ -131,41 +160,27 @@ public class DAO {
             
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        if (cat!=null) {
+                            stmt.setString(1, cat);
+                        } 
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+                            int reference=rs.getInt("REFERENCE");
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            float prixUnitaire=rs.getFloat("PRIX_UNITAIRE");
-                            float quantiteParUnite=rs.getFloat("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
                             int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
-                            boolean indispo=rs.getInt("INDISPONIBLE")==1;
-                            Produit p = new Produit(nProduit, fournisseur,categorie,prixUnitaire,quantiteParUnite,
+                            int indispo=rs.getInt("INDISPONIBLE");
+                            Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
-				result.add(p);
+                            result.add(p);
                         }
             }
             return result;
-        }
-        
-        public int addProduct(String nProduit,int fournisseur,int categorie,
-                                float prixUnitaire, int unitesEnStock,int unites_Commandees,
-                                int niveauReaprovi,boolean indispo) throws SQLException {
-            //  ? - Reference INT GENERATED BY DEFAULT AS IDENTITY NOT NULL PRIMARY KEY - ?
-            
-            //Nom VARCHAR(40) NOT NULL UNIQUE,
-            //Fournisseur INT default 0 NOT NULL ,
-            //Categorie INT NOT NULL REFERENCES Categorie (Code) ON DELETE RESTRICT,
-            //Prix_unitaire DECIMAL(18,2) DEFAULT 0.00 NOT NULL CHECK (Prix_unitaire >= 0),
-            //Unites_en_stock SMALLINT DEFAULT 0 NOT NULL  CHECK (Unites_en_stock >= 0),
-            //Unites_commandees SMALLINT DEFAULT 0 NOT NULL CHECK (Unites_commandees >= 0),
-            //Niveau_de_reappro SMALLINT DEFAULT 0 NOT NULL CHECK (Niveau_de_reappro >= 0),
-            //Indisponible SMALLINT DEFAULT 0 NOT NULL CHECK (Indisponible = 0 OR Indisponible = 
-            
-            String sql = "";;
-           
         }
         
         /**

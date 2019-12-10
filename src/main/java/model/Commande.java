@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author hvv
@@ -13,8 +15,8 @@ public class Commande {
     
     private int numero;
     private String client;
-    private String saisieLe;
-    private String envoyeeLe;
+    private Date saisieLe;
+    private Date envoyeeLe;
     private float port;
     private String destinataire;
     private String adresseLivraison;
@@ -24,7 +26,7 @@ public class Commande {
     private String paysLivraison;
     private float remise;
 
-    public Commande(int numero, String client, String saisieLe, String envoyeeLe, float port, String destinataire, String adresseLivraison, String villeLivraison, String regionLivraison, String codePostalLivrais, String paysLivraison, float remise) {
+    public Commande(int numero, String client, Date saisieLe, Date envoyeeLe, float port, String destinataire, String adresseLivraison, String villeLivraison, String regionLivraison, String codePostalLivrais, String paysLivraison, float remise) {
         this.numero = numero;
         this.client = client;
         this.saisieLe = saisieLe;

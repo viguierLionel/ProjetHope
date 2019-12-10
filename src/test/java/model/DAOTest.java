@@ -28,7 +28,7 @@ public class DAOTest {
     
     private DataSource myDataSource;
     private static Connection myConnection ;
-    private DAO dao; 
+    private DAO dao;
     
     	@Before
 	public  void setUp() throws IOException, SqlToolError, SQLException {
@@ -36,12 +36,13 @@ public class DAOTest {
 		myDataSource = getDataSource();
 		myConnection = myDataSource.getConnection();
 		// On crée le schema de la base de test
-		executeSQLScript(myConnection, "ressources.testSQL.sql");
+		executeSQLScript(myConnection, "schema_bd.sql");
 		// On y met des données
-		executeSQLScript(myConnection, "smalltestdata.sql");		
+		executeSQLScript(myConnection, "ajoutDonnees.sql");		
 
             	dao = new DAO(myDataSource);
-	}
+ 
+        }
 	
 	private void executeSQLScript(Connection connexion, String filename)  throws IOException, SqlToolError, SQLException {
 		// On initialise la base avec le contenu d'un fichier de test
@@ -50,7 +51,7 @@ public class DAOTest {
 
 		sqlFile.setConnection(connexion);
 		sqlFile.execute();
-		sqlFile.closeReader();		
+		sqlFile.closeReader();	
 	}
 		
 	@After
@@ -59,36 +60,57 @@ public class DAOTest {
              	dao = null; // Pas vraiment utile
 
 	}
-    /**
-     * Test of codeClient method, of class DAO.
-     */
+    
+        
+    //PRODUIT ****************************************************************************************************************************
+    
     @Test
-    public void testCodeClient() throws Exception {
-        System.out.println("codeClient");
-        String contact = "";
-        DAO instance = null;
-        String expResult = "";
-        String result = instance.codeClient(contact);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void selectProductTest() throws SQLException{
+        Produit produit = new Produit(18,"Carnarvon Tigers",7,8,"1 carton (16 kg)",312.00,42,0,0,0);
+        assertEquals(produit,dao.selectProduct(18));
+    }
+        
+    @Test
+    public void selectNomProduct() throws SQLException{
+        assertEquals(8,dao.selectNomProduct("le").size());
+    }
+    
+    @Test
+    public void allProductsTest() throws SQLException{
+        assertEquals(77,dao.allProducts().size());
+    }
+    
+    @Test
+    public void allProductsFromCatTest() throws SQLException{
+        assertEquals(12,dao.allProductsFromCat("Boi").size());
+    }
+        
+ 
+    //CATEGORIE ****************************************************************************************************************************
+    
+    @Test
+    public void allCategoriesTest() throws SQLException {
+        List<Categorie> listeCategories = dao.allCategories();
+        assertEquals(8,listeCategories.size());
+    }
+    
+    @Test
+    public void categorieTest() throws SQLException {
+        Categorie categorie = new Categorie(2, "Condiments", "Sauces, assaisonnements et épices");
+        assertEquals(categorie,dao.categorie(2));
+    }
+    
+    @Test
+    public void libelleCategorieTest() throws SQLException {
+        assertEquals(dao.libelleCategorie(1),"Boissons");
     }
 
-    /**
-     * Test of selectProduct method, of class DAO.
-     */
     @Test
-    public void testSelectProduct() throws Exception {
-        System.out.println("selectProduct");
-        String nom = "";
-        DAO instance = null;
-        List<Produit> expResult = null;
-        List<Produit> result = instance.selectProduct(nom);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void descriptionCategorieTest() throws SQLException {
+        assertEquals(dao.descriptionCategorie(7),"Fruits secs, raisins, autres");
     }
-
+    
+    //********************************************************************************
     
     public static DataSource getDataSource() {
 		org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
@@ -96,6 +118,6 @@ public class DAOTest {
 		ds.setUser("sa");
 		ds.setPassword("sa");
 		return ds;
-	}	
+    }	
     
 }
