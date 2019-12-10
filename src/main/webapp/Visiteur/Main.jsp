@@ -13,7 +13,7 @@
         <h1>EcoPlusPlus</h1>
         <div class="connexion">
         	<form method='GET'>
-			<input type="hidden" name="Connexion.jsp">
+                    <input type="hidden" name="action" value="CONNEXION">
 			<input type="submit" value="Connexion">
 		</form>
         </div>
@@ -23,10 +23,9 @@
                   <p>
                      <label>Select list</label>
                      <select id = "listeCategorie">
-                       <option name="catego" value = "Tous">Tous</option>
-                       <option name="catego" value = "Produit">Produit secs</option>
-                       <option name="catego" value = "Boisson">Boisson</option>
-                       <option name="catego" value = "Viande">Viande</option>
+                         <c:forEach var="cat" items="${Categorie}">
+                             <option name name="catego" value="${Categorie}">${Categorie}</option>
+                         </c:forEach>
                      </select>
                   </p>
             </form>
