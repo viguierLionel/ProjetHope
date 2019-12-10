@@ -7,7 +7,6 @@ package com.mycompany.hope;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,10 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pedago
+ * @author 33647
  */
-@WebServlet(name = "Visiteur", urlPatterns = {"/Visiteur"})
-public class VisiteurController extends HttpServlet {
+@WebServlet(name = "Maincl", urlPatterns = {"/Maincl"})
+public class MainclController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,16 +38,19 @@ public class VisiteurController extends HttpServlet {
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
 	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
 		try {
-                        
-                        request.setAttribute("Categorie", dao.allCategories());
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
+                        request.setAttribute("Categorie", dao.allCategories());
 			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
-			switch (action) {
-				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
-					request.getRequestDispatcher("Visiteur/Connexion.jsp").forward(request, response);						
+			
+                        switch (action) {
+				case "DECONNEXION": // Requête d'ajout (vient du formulaire de saisie)
+					request.getRequestDispatcher("Visiteur/Main.jsp").forward(request, response);						
 					break;
-				case "INSCRIPTION": // Requête de 
-					request.getRequestDispatcher("Visiteur/Inscription.jsp").forward(request, response);
+				case "AJOUT": // Requête de suppression (vient du lien hypertexte)
+					request.getRequestDispatcher("Client/Ajoutcl.jsp").forward(request, response);
+					break;
+                                case "CADDIE": // Requête de suppression (vient du lien hypertexte)
+					request.getRequestDispatcher("Client/Caddie.jsp").forward(request, response);
 					break;
 			}
 		} catch (Exception ex) {
@@ -62,7 +64,6 @@ public class VisiteurController extends HttpServlet {
 	}
         }
     
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -102,4 +103,4 @@ public class VisiteurController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-
+}
