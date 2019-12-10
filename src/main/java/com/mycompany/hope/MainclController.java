@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DAO;
+import model.DataSourceFactory;
         
 
 /**
@@ -45,13 +46,13 @@ public class MainclController extends HttpServlet {
 			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
 			
                         switch (action) {
-				case "DECONNEXION": // Requête d'ajout (vient du formulaire de saisie)
+				case "DECONNEXION": // lien vers la page du visiteur
 					request.getRequestDispatcher("Visiteur/Main.jsp").forward(request, response);						
 					break;
-				case "AJOUT": // Requête de suppression (vient du lien hypertexte)
+				case "AJOUT": // lien vers l'ajout au panier
 					request.getRequestDispatcher("Client/Ajoutcl.jsp").forward(request, response);
 					break;
-                                case "CADDIE": // Requête de suppression (vient du lien hypertexte)
+                                case "CADDIE": // lien vers le caddie
 					request.getRequestDispatcher("Client/Caddie.jsp").forward(request, response);
 					break;
 			}
