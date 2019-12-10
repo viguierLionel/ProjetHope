@@ -26,6 +26,30 @@
 		<artifactId>jstl</artifactId>
 		<version>1.2</version>
 	</dependency>
+        <!-- Derby embedded database and JDBC Driver -->
+        <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>10.14.1.0</version>
+        </dependency>
+        <!-- Derby network client JDBC driver -->
+        <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbyclient</artifactId>
+                <version>10.14.1.0</version>
+        </dependency>
+        <!-- Derby tols (for initializing database from SQL script) -->
+        <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbytools</artifactId>
+                <version>10.14.1.0</version>
+        </dependency>
+        <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+            <type>jar</type>
+        </dependency>	
     </dependencies>
 
     <build>
@@ -74,6 +98,13 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                    </configuration>
             </plugin>
         </plugins>
     </build>
