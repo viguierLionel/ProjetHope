@@ -1,17 +1,21 @@
-<%-- 
-    Document   : Connexion
-    Created on : 27 nov. 2019, 16:46:57
-    Author     : pedago
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>EcoPlusPlus</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div>
+            <form method='GET'>
+                Username:<br>
+		<input type="text" name="utilisateur">
+                <br>
+                Mot de passe:<br>
+            	<input type="text" name="mdp">
+                <br><br>
+                <input type="submit" value="connecter">
+            </form>
+        </div>
     </body>
 </html>
