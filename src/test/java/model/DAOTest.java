@@ -36,7 +36,7 @@ public class DAOTest {
 		myDataSource = getDataSource();
 		myConnection = myDataSource.getConnection();
 		// On crée le schema de la base de test
-		executeSQLScript(myConnection, "schema_bd.sql");
+		executeSQLScript(myConnection, "schemaBD.sql");
 		// On y met des données
 		executeSQLScript(myConnection, "ajoutDonnees.sql");		
 
@@ -66,7 +66,7 @@ public class DAOTest {
     
     @Test
     public void selectProductTest() throws SQLException{
-        Produit produit = new Produit(18,"Carnarvon Tigers",7,8,"1 carton (16 kg)",312.00,42,0,0,0);
+        Produit produit = new Produit( 18, "Carnarvon Tigers", 7, 8, "1 carton (16 kg)", 312.00, 42, 0, 0, 0);
         assertEquals(produit,dao.selectProduct(18));
     }
         

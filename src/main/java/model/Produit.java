@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author hvv
@@ -38,6 +40,52 @@ public class Produit {
         else{
             this.indisponible = false;
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Produit other = (Produit) obj;
+        if (this.reference != other.reference) {
+            return false;
+        }
+        if (this.fournisseur != other.fournisseur) {
+            return false;
+        }
+        if (this.categorie != other.categorie) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.prixUnitaire) != Double.doubleToLongBits(other.prixUnitaire)) {
+            return false;
+        }
+        if (this.unitesEnStock != other.unitesEnStock) {
+            return false;
+        }
+        if (this.unites_Commandees != other.unites_Commandees) {
+            return false;
+        }
+        if (this.niveauReaprovi != other.niveauReaprovi) {
+            return false;
+        }
+        if (this.indisponible != other.indisponible) {
+            return false;
+        }
+        if (!Objects.equals(this.nProduit, other.nProduit)) {
+            return false;
+        }
+        if (!Objects.equals(this.quantiteParUnite, other.quantiteParUnite)) {
+            return false;
+        }
+        return true;
     }
     
     

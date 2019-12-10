@@ -61,11 +61,11 @@ public class DAO {
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QUANTITE_PAR_UNITE");
                             double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
-                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPRO");
                             int indispo=rs.getInt("INDISPONIBLE");
                             Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
@@ -83,21 +83,21 @@ public class DAO {
         public List<Produit> selectNomProduct(String nom) throws SQLException {
             List<Produit> result = new LinkedList<>();
             
-            String sql = "SELECT * FROM PRODUIT WHERE Nom LIKE '%?%'";
+            String sql = "SELECT * FROM PRODUIT WHERE Nom LIKE ? ";
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, nom);
+                        stmt.setString(1, "%" + nom + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
                             int reference=rs.getInt("REFERENCE");
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QUANTITE_PAR_UNITE");
                             double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
-                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPRO");
                             int indispo=rs.getInt("INDISPONIBLE");
                             Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
@@ -126,11 +126,11 @@ public class DAO {
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QUANTITE_PAR_UNITE");
                             double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
-                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPRO");
                             int indispo=rs.getInt("INDISPONIBLE");
                             Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
@@ -155,13 +155,13 @@ public class DAO {
             if (cat==null) {
                 sql = "SELECT * FROM PRODUIT";;
             } else {
-                sql = "SELECT * FROM PRODUIT INNER JOIN CATEGORIE ON PRODUIT.CATEGORIE = CATEGORIE.CODE WHERE LIBELLE LIKE '%?%'";;
+                sql = "SELECT * FROM PRODUIT INNER JOIN CATEGORIE ON PRODUIT.CATEGORIE = CATEGORIE.CODE WHERE LIBELLE LIKE ?";;
             }
             
             try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
                         if (cat!=null) {
-                            stmt.setString(1, cat);
+                            stmt.setString(1, "%" + cat + "%");
                         } 
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -169,11 +169,11 @@ public class DAO {
                             String nProduit=rs.getString("NOM");
                             int fournisseur=rs.getInt("FOURNISSEUR");
                             int categorie=rs.getInt("CATEGORIE");
-                            String quantiteParUnite=rs.getString("QAUNTITE_PAR_UNITE");
+                            String quantiteParUnite=rs.getString("QUANTITE_PAR_UNITE");
                             double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
                             int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
                             int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
-                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPROVI");
+                            int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPRO");
                             int indispo=rs.getInt("INDISPONIBLE");
                             Produit p = new Produit(reference,nProduit,fournisseur,categorie,quantiteParUnite,prixUnitaire,
                                                         unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
