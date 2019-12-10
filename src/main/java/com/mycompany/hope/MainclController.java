@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DAO;
+        
 
 /**
  *
@@ -62,7 +64,7 @@ public class MainclController extends HttpServlet {
 		// On continue vers la page JSP sélectionnée
 		request.getRequestDispatcher("Main.jsp").forward(request, response);
 	}
-        }
+        
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
