@@ -40,6 +40,7 @@ public class AjoutclController extends HttpServlet {
 		try {
                     
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
+                        request.setAttribute("Articles", dao.Products(a));//prend un string envoie un produit
                         switch (action) {
 				case "RETOUR": // lien vers la page du visiteur
 					request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);						
@@ -52,9 +53,8 @@ public class AjoutclController extends HttpServlet {
                                         else{
                                             request.setAttribute("Message", "impossible d'ajouter l'article.");
                                         }
-					request.getRequestDispatcher("Client/Ajoutcaddie.jsp").forward(request, response);
+					request.getRequestDispatcher("Client/Caddie.jsp").forward(request, response);
 					break;
-
 			}
 			
                         

@@ -7,7 +7,6 @@ package com.mycompany.hope;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,11 +19,20 @@ import model.DataSourceFactory;
 
 /**
  *
- * @author pedago
+ * @author 33647
  */
-@WebServlet(name = "Visiteur", urlPatterns = {"/Visiteur"})
-public class VisiteurController extends HttpServlet {
+@WebServlet(name = "TrolleyController", urlPatterns = {"/TrolleyController"})
+public class TrolleyController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,18 +47,20 @@ public class VisiteurController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
-	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
 		try {
-                        
-                        request.setAttribute("Categorie", dao.allCategories());
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
-			switch (action) {
-				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
-					request.getRequestDispatcher("Visiteur/Connexion.jsp").forward(request, response);						
+			request.setAttribute("Caddie", dao.Caddie()); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
+			
+                        switch (action) {
+				case "VALIDER": 
+					request.getRequestDispatcher("Visiteur/Main.jsp").forward(request, response);						
 					break;
-				case "INSCRIPTION": // Requête de 
-					request.getRequestDispatcher("Visiteur/Inscription.jsp").forward(request, response);
+                                case "SUPRIMER": //?????????????????????????????????????????????????????????????????????????????????????
+					break;
+				case "MODIFIER": //?????????????????????????????????????????????????????????????????????????????????????
+					break;
+                                case "RETOUR":
+					request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);
 					break;
 			}
 		} catch (Exception ex) {
@@ -60,10 +70,8 @@ public class VisiteurController extends HttpServlet {
 
 		}
 		// On continue vers la page JSP sélectionnée
-		request.getRequestDispatcher("Main.jsp").forward(request, response);
+		request.getRequestDispatcher("Caddie.jsp").forward(request, response);
 	}
-        
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -103,6 +111,5 @@ public class VisiteurController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
-
-
