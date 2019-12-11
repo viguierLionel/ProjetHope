@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,10 +15,10 @@
         <div class="main">
             <p class="sign" align="center">Connectez-vous</p>
                 <form class="form1">
-                <input class="input" name="contact" type="text" align="center" placeholder="Nom d'utilisateur">
-                <input class="input" name="motDePasse" type="password" align="center" placeholder="Mot de passe">
-                <a class="submit" align="center" value="connecter">Connexion</a>
-            </form>
+                    <input class="input" name="contact" type="text" align="center" placeholder="Nom d'utilisateur">
+                    <input class="input" name="motDePasse" type="password" align="center" placeholder="Mot de passe">
+                    <a class="submit" align="center" value="connecter" href="<c:url value="Main.jsp"/>" >Connexion</a>
+                </form>
             <br><br>
                 <div> <a class="inscription" value="inscription">Inscription</a> <a class="retour" value="retour">Retour</a>  </div>
     </body>
