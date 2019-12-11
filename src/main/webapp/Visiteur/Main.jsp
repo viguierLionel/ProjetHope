@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="Main.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
         <link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap-grid.css">
         <title>EcoPlusPlus</title>
         <style>
