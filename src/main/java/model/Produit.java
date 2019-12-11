@@ -42,6 +42,42 @@ public class Produit {
         }
     }
 
+    public int getReference() {
+        return reference;
+    }
+
+    public String getnProduit() {
+        return nProduit;
+    }
+
+    public int getFournisseur() {
+        return fournisseur;
+    }
+
+    public int getCategorie() {
+        return categorie;
+    }
+
+    public String getQuantiteParUnite() {
+        return quantiteParUnite;
+    }
+
+    public double getPrixUnitaire() {
+        return prixUnitaire;
+    }
+
+    public int getUnitesEnStock() {
+        return unitesEnStock;
+    }
+
+    public int getNiveauReaprovi() {
+        return niveauReaprovi;
+    }
+
+    public boolean isIndisponible() {
+        return indisponible;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

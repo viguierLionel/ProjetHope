@@ -189,15 +189,16 @@ public class DAO {
          * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
          * @throws SQLException
          */
-        public int delProduct(String nProduit) throws SQLException {
+        public int delProduct(int reference) throws SQLException {
             
-            String sql = "DELETE FROM PRODUIT WHERE Nom = ?";;
+            String sql = "DELETE FROM LIGNE WHERE PRODUIT = ?; DELETE FROM PRODUIT WHERE reference = ?";;
             
 		try (   Connection connection = myDataSource.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql)
                 ) {
                         // Définir la valeur du paramètre
-			stmt.setString(1, nProduit);
+			stmt.setInt(1, reference);
+                        stmt.setInt(2, reference);
 			
 			return stmt.executeUpdate();
 

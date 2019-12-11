@@ -84,6 +84,12 @@ public class DAOTest {
     public void allProductsFromCatTest() throws SQLException{
         assertEquals(12,dao.allProductsFromCat("Boi").size());
     }
+    
+    @Test
+    public void delProductTest() throws SQLException {
+        assertEquals(1,dao.delProduct(1));
+    }
+    
         
  
     //CATEGORIE ****************************************************************************************************************************
