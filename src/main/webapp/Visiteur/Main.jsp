@@ -16,17 +16,17 @@
     <body> 
         <div class="container-fluid">
             <div class="row">
-                <div class="span1 offset-10">
+                <div class="span1">
                     <form method='GET'>
                         <input type="hidden" name="action" value="CONNEXION" >
-                        <input type="submit" value="Connexion">
+                        <a class="redirect" value="retour" href="<c:url value="Connexion.jsp" />" >Connexion</a>
                     </form>
                 </div>
 
                 <div class="span1">
                     <form method='GET'>
                         <input type="hidden" name="action" value="INSCRIPTION" >
-                        <input type="submit" value="inscription">
+                        <a class="redirect" value="inscription" href="<c:url value="Inscription.jsp" />" >Inscription</a>
                     </form>
                 </div>
             </div>
@@ -36,8 +36,9 @@
     	<div>
             <form>
                   <p>
-                     <label>Select list</label>
+                     <label class="sign" >Selectionné une catégorie</label>
                      <select id = "listeCategorie">
+                         <option name name="catego" value="Tous">Tous</option>
                          <c:forEach var="cat" items="${Categorie}">
                              <option name name="catego" value="${Categorie}">${Categorie}</option>
                          </c:forEach>
