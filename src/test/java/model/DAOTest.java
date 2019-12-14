@@ -163,6 +163,21 @@ public class DAOTest {
         assertEquals(830,listeCommande.size());
     }
     
+    @Test
+    public void selectCommandeTest() throws SQLException{
+        Commande commande = new Commande(10248, "VINET", "1994-08-04", "1994-08-16", 161.00, "Vins et alcools Chevalier",
+                "59 rue de l'Abbaye", "Reims", null, "51100", "France", 0.00);
+        assertEquals(commande,dao.selectCommande(10248));
+    }
+    
+    @Test
+    public void addCommandeTest() throws SQLException{
+        Commande commande = new Commande(11400, "VINET", "2020-04-20","2020-09-30",420.00,"La chancla",
+                "22 avenue j'ai plus d'idée","Albi", "TR","81000","France",0.00);
+        dao.addCommande(commande);
+        assertEquals(commande,dao.selectCommande(11400));
+    }
+    
     //CATEGORIE ****************************************************************************************************************************
     
     @Test

@@ -168,6 +168,11 @@ public class DAO {
         
         //PRODUIT ****************************************************************************************************************************
         
+        /**
+         * permet d'avoir un produit en fonction d'une reference
+         * @return le produit
+         * @throws java.sql.SQLException renvoyées par JDBC
+         */
         public Produit selectProduct(int reference) throws SQLException {
             Produit resultat = null;
             String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
@@ -196,7 +201,7 @@ public class DAO {
         
         /**
          * permet d'avoir une liste de produits dont le nom possède le mot clé entré en argument
-         * @return ou liste de produits
+         * @return liste de produits
          * @throws java.sql.SQLException renvoyées par JDBC
          */
         public List<Produit> selectNomProduct(String nom) throws SQLException {
@@ -227,7 +232,7 @@ public class DAO {
         }
             
         /**
-         * Permet d'avoir une tout les produits
+         * Permet d'avoir tout les produits
          * @return liste de tout les produits
          * @throws SQLException
          */
@@ -303,7 +308,7 @@ public class DAO {
         }
         
         /**
-         * 
+         * Permet d'ajouter un nouveau produit
          * @param produit
          * @return le nombre d'enregistrements réalisé (1 ou 0 si non realisé)
          * @throws SQLException 
@@ -403,6 +408,11 @@ public class DAO {
 
         //COMMANDE ****************************************************************************************************************************
         
+         /**
+         * Permet d'avoir toute les commandes
+         * @return liste de toute les commandes
+         * @throws SQLException
+         */
         public List<Commande> allCommandes() throws SQLException {
             List<Commande> resultat = new ArrayList<Commande>();
             String sql = "SELECT * FROM COMMANDE";
@@ -431,6 +441,78 @@ public class DAO {
             }
             return resultat;
         }
+        
+        /**
+         * permet d'avoir une commande en fonction d'un numéro
+         * @return une commande
+         * @throws java.sql.SQLException renvoyées par JDBC
+         */
+        public Commande selectCommande(int numero) throws SQLException {
+            Commande resultat = null;
+            String sql = "SELECT * FROM COMMANDE WHERE NUMERO = ?";
+            
+            try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    stmt.setInt(1, numero);
+                    ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        String client = rs.getString("CLIENT");
+                        String saisieLe = rs.getString("SAISIE_LE");
+                        String envoyeeLe = rs.getString("ENVOYEE_LE");
+                        double port = rs.getDouble("PORT");
+                        String destinataire = rs.getString("DESTINATAIRE");
+                        String adresseLivraison = rs.getString("ADRESSE_LIVRAISON");
+                        String villeLivraison = rs.getString("VILLE_LIVRAISON");
+                        String regionLivraison = rs.getString("REGION_LIVRAISON");
+                        String codePostalLivrais = rs.getString("CODE_POSTAL_LIVRAIS");
+                        String paysLivraison = rs.getString("PAYS_LIVRAISON");
+                        double remise = rs.getDouble("REMISE");
+
+                        Commande c = new Commande(numero, client, saisieLe, envoyeeLe, port, destinataire, adresseLivraison,
+                                villeLivraison, regionLivraison, codePostalLivrais, paysLivraison, remise);
+                        resultat = c;
+                    }
+            }
+            return resultat;
+        } 
+        /**
+         * Permet d'ajouter une commande
+         * @param numero
+         * @param client
+         * @param saisieLe
+         * @param envoyeeLe
+         * @param port
+         * @param destinataire
+         * @param adresseLivraison
+         * @param villeLivraison
+         * @param regionLivraison
+         * @param codePostalLivrais
+         * @param paysLivraison
+         * @param remise
+         * @return le nombre d'enregistrements réalisé (1 ou 0 si non realisé)
+         * @throws SQLException 
+         */
+        public int addCommande(Commande commande) throws SQLException {
+            String sql = "INSERT INTO COMMANDE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            try (Connection connection = myDataSource.getConnection();
+                    PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, commande.getNumero());
+                        stmt.setString(2, commande.getClient());
+                        stmt.setString(3, commande.getStringSaisieLe());
+                        stmt.setString(4, commande.getStringEnvoyeeLe());
+                        stmt.setDouble(5, commande.getPort());
+                        stmt.setString(6, commande.getDestinataire());
+                        stmt.setString(7, commande.getAdresseLivraison());
+                        stmt.setString(8, commande.getVilleLivraison());
+                        stmt.setString(9, commande.getRegionLivraison());
+                        stmt.setString(10, commande.getCodePostalLivrais());
+                        stmt.setString(11, commande.getPaysLivraison());
+                        stmt.setDouble(12, commande.getRemise());
+
+                        return stmt.executeUpdate();
+            }
+        }
+        
         
         //CATEGORIE ****************************************************************************************************************************
         
