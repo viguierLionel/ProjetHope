@@ -5,7 +5,8 @@
  */
 package model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -15,22 +16,31 @@ public class Commande {
     
     private int numero;
     private String client;
-    private Date saisieLe;
-    private Date envoyeeLe;
-    private float port;
-    private String destinataire;
-    private String adresseLivraison;
-    private String villeLivraison;
-    private String regionLivraison;
-    private String codePostalLivrais;
-    private String paysLivraison;
-    private float remise;
+    private Date saisieLe;//can be NULL
+    private Date envoyeeLe;//can be NULL
+    private double port;//can be NULL
+    private String destinataire;//can be NULL
+    private String adresseLivraison;//can be NULL
+    private String villeLivraison;//can be NULL
+    private String regionLivraison;//can be NULL
+    private String codePostalLivrais;//can be NULL
+    private String paysLivraison;//can be NULL
+    private double remise;
+    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Commande(int numero, String client, Date saisieLe, Date envoyeeLe, float port, String destinataire, String adresseLivraison, String villeLivraison, String regionLivraison, String codePostalLivrais, String paysLivraison, float remise) {
+    public Commande(int numero, String client, String saisieLe, String envoyeeLe, double port, String destinataire, String adresseLivraison, String villeLivraison, String regionLivraison, String codePostalLivrais, String paysLivraison, double remise) {
         this.numero = numero;
         this.client = client;
-        this.saisieLe = saisieLe;
-        this.envoyeeLe = envoyeeLe;
+        try{ 
+            this.saisieLe = formatDate.parse(saisieLe);
+        }catch(Exception e){
+            this.saisieLe = null;
+        }
+        try{
+             this.envoyeeLe = formatDate.parse(envoyeeLe);
+        }catch(Exception e){
+            this.envoyeeLe = null;
+        }
         this.port = port;
         this.destinataire = destinataire;
         this.adresseLivraison = adresseLivraison;

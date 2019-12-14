@@ -31,54 +31,140 @@ public class DAO {
          * @throws SQLException 
          */
         public List<Client> allClients() throws SQLException {
-        List<Client> result = new ArrayList<>();
-        String sql = "SELECT * FROM CLIENT";
-        
-        try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-                            String code = rs.getString("CODE");
-                            String societe = rs.getString("SOCIETE");
-                            String contact = rs.getString("CONTACT");
-                            String fonction = rs.getString("FONCTION");
-                            String adresse = rs.getString("ADRESSE");
-                            String ville = rs.getString("VILLE");
-                            String region = rs.getString("REGION");
-                            String codePostal = rs.getString("CODE_POSTAL");
-                            String pays = rs.getString("PAYS");
-                            String telephone = rs.getString("TELEPHONE");
-                            String fax = rs.getString("FAX");
-                            Client c = new Client(code, societe, contact, fonction, adresse, ville, region, codePostal, pays, telephone, fax);
-                            result.add(c);
-            }
-        }
-        return result;
-    }
-        
-        /**
-         * Permet d'avoir le code d'un client en fonction de Contact  
-         * @return Code du Client
-         * @throws java.sql.SQLException renvoyées par JDBC
-         */
-        public String codeClient(String contact) throws SQLException {
-            String result = null;;
-            String sql = "SELECT CODE FROM CLIENT WHERE CONTACT= '?'";
-            
+            List<Client> result = new ArrayList<>();
+            String sql = "SELECT * FROM CLIENT";
+
             try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, contact);
-                        try (ResultSet resultSet = stmt.executeQuery()) {
-				if (resultSet.next()) {
-					result = resultSet.getString("LastName");
-				}
-			}
-			
-		}
-            
+                         PreparedStatement stmt = connection.prepareStatement(sql)) {
+                            ResultSet rs = stmt.executeQuery();
+                            while (rs.next()) {
+                                String code = rs.getString("CODE");
+                                String societe = rs.getString("SOCIETE");
+                                String contact = rs.getString("CONTACT");
+                                String fonction = rs.getString("FONCTION");
+                                String adresse = rs.getString("ADRESSE");
+                                String ville = rs.getString("VILLE");
+                                String region = rs.getString("REGION");
+                                String codePostal = rs.getString("CODE_POSTAL");
+                                String pays = rs.getString("PAYS");
+                                String telephone = rs.getString("TELEPHONE");
+                                String fax = rs.getString("FAX");
+                                Client c = new Client(code, societe, contact, fonction, adresse, ville, region, codePostal, pays, telephone, fax);
+                                result.add(c);
+                }
+            }
             return result;
         }
         
+        /**
+         * Permet d'avoir le Contact d'un client en fonction du code  
+         * @param code
+         * @return
+         * @throws SQLException 
+         */
+        public Client selectClient(String code) throws SQLException {
+            Client client = null;
+            String sql = "SELECT * FROM CLIENT WHERE CODE = ?";
+            try (Connection myConnection = myDataSource.getConnection();
+                    PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                        statement.setString(1, code);
+                        try (ResultSet rs = statement.executeQuery()) {
+                            if (rs.next()) {
+                                String societe = rs.getString("SOCIETE");
+                                String contact = rs.getString("CONTACT");
+                                String fonction = rs.getString("FONCTION");
+                                String adresse = rs.getString("ADRESSE");
+                                String ville = rs.getString("VILLE");
+                                String region = rs.getString("REGION");
+                                String codePostal = rs.getString("CODE_POSTAL");
+                                String pays = rs.getString("PAYS");
+                                String telephone = rs.getString("TELEPHONE");
+                                String fax = rs.getString("FAX");
+                                client = new Client(code, societe, contact, fonction, adresse, ville, region, codePostal, pays, telephone, fax);
+                            }
+                        }
+            }
+            return client;
+        }
+                
+        
+        /**
+         * Permet de voir si un mot de passe (pwd) existe
+         * @param pwd
+         * @return 0 si le password n'existe pas, 1 si il existe 
+         * @throws SQLException 
+         */
+        public int pwdExiste(String pwd) throws SQLException {
+            int resultat = 0;
+            
+            String sql = "SELECT * FROM CLIENT WHERE CODE = ?";
+            try (Connection myConnection = myDataSource.getConnection();
+                    PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                        statement.setString(1, pwd);
+                        try (ResultSet rs = statement.executeQuery()) {
+                            if (rs.next()) {
+                                resultat = 1;
+                            }
+                        }
+            }
+            return resultat;
+        }
+        
+        /**
+         * Permet de voir si un compte existe ou non ainsi que sa nature (client ou admin)
+         * @param id
+         * @param pwd
+         * @return 0 si le compte n'existe pas, 1 si il existe et est celui d'un client, 2 si il existe et est celui un admin
+         * @throws SQLException 
+         */
+        public int compteExiste(String id, String pwd) throws SQLException {
+            int resultat = 0;
+            if (id.equals("admin") && pwd.equals("admin")) {
+                resultat = 2;
+            } else {
+                String sql = "SELECT * FROM CLIENT WHERE CONTACT = ? AND CODE = ?";
+                try (Connection myConnection = myDataSource.getConnection();
+                        PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                            statement.setString(1, id);
+                            statement.setString(2, pwd);
+                            try (ResultSet rs = statement.executeQuery()) {
+                                if (rs.next()) {
+                                    resultat = 1;
+                                }
+                            }
+                }
+            }
+            return resultat;
+        }
+        
+        /**
+         * Permet d'enregistrer les modifications d'un client
+         * @param client
+         * @return si la modification a été réalisé ou non ( 0 si ce n'est pas le cas)
+         * @throws SQLException 
+         */
+        public int majModClient(Client client) throws SQLException {
+
+            String sql = "UPDATE CLIENT SET SOCIETE=?,CONTACT=?,FONCTION=?,ADRESSE=?,VILLE=?,REGION=?,CODE_POSTAL=?,PAYS=?,"
+                    + "TELEPHONE=?,FAX=? WHERE CODE=?";
+
+            try (Connection myConnection = myDataSource.getConnection();
+                    PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                        statement.setString(1, client.getSociete());
+                        statement.setString(2, client.getContact());
+                        statement.setString(3, client.getFonction());
+                        statement.setString(4, client.getAdresse());
+                        statement.setString(5, client.getVille());
+                        statement.setString(6, client.getRegion());
+                        statement.setString(7, client.getCodePostal());
+                        statement.setString(8, client.getPays());
+                        statement.setString(9, client.getTelephone());
+                        statement.setString(10, client.getFax());
+                        statement.setString(11, client.getCode());
+                        
+                        return statement.executeUpdate();
+            }
+        }
         
         //PRODUIT ****************************************************************************************************************************
         
@@ -272,7 +358,6 @@ public class DAO {
 			
 			return stmt.executeUpdate();
 		}
-            
         }
         
         
@@ -316,6 +401,37 @@ public class DAO {
 		}
         }
 
+        //COMMANDE ****************************************************************************************************************************
+        
+        public List<Commande> allCommandes() throws SQLException {
+            List<Commande> resultat = new ArrayList<Commande>();
+            String sql = "SELECT * FROM COMMANDE";
+            try (Connection connection = myDataSource.getConnection();
+                    PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        ResultSet rs = stmt.executeQuery();
+                        while (rs.next()) {
+                            int code = rs.getInt("NUMERO");
+                            String client = rs.getString("CLIENT");
+                            String saisieLe = rs.getString("SAISIE_LE");
+                            String envoyeeLe = rs.getString("ENVOYEE_LE");
+                            double port = rs.getDouble("PORT");
+                            String destinataire = rs.getString("DESTINATAIRE");
+                            String adresseLivraison = rs.getString("ADRESSE_LIVRAISON");
+                            String villeLivraison = rs.getString("VILLE_LIVRAISON");
+                            String regionLivraison = rs.getString("REGION_LIVRAISON");
+                            String codePostalLivrais = rs.getString("CODE_POSTAL_LIVRAIS");
+                            String paysLivraison = rs.getString("PAYS_LIVRAISON");
+                            double remise = rs.getDouble("REMISE");
+
+                            Commande c = new Commande(code, client, saisieLe, envoyeeLe, port,
+                                    destinataire, adresseLivraison, villeLivraison, regionLivraison,
+                                    codePostalLivrais, paysLivraison, remise);
+                            resultat.add(c);
+                        }
+            }
+            return resultat;
+        }
+        
         //CATEGORIE ****************************************************************************************************************************
         
         /**

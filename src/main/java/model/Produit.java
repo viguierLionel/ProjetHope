@@ -134,7 +134,12 @@ public class Produit {
     
     @Override
     public String toString() {
-        return "Produit{" + "reference= " + reference + ",\n nom= " + nProduit + ",\n fournisseur= " + fournisseur + ",\n categorie= " + categorie + ",\n quantite_par_unite= " + quantiteParUnite + ",\n prix_unitaire= " + prixUnitaire + ",\n unites_en_stock= " + unitesEnStock + ",\n unites_commandes= " + unites_Commandees + ",\n niveau_reaprovis= " + niveauReaprovi + ",\n indisponible= " + indisponible + '}';
+        return "Produit{" + "reference= " + reference + ",\n nom= " + nProduit 
+                + ",\n fournisseur= " + fournisseur + ",\n categorie= " + categorie 
+                + ",\n quantite_par_unite= " + quantiteParUnite + ",\n prix_unitaire= " 
+                + prixUnitaire + ",\n unites_en_stock= " + unitesEnStock + ",\n unites_commandes= " 
+                + unites_Commandees + ",\n niveau_reaprovis= " + niveauReaprovi 
+                + ",\n indisponible= " + indisponible + '}';
     }
     
 }
