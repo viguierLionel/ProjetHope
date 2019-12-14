@@ -17,7 +17,7 @@ public class Produit {
     private String nProduit;
     private int fournisseur;
     private int categorie;
-    private String quantiteParUnite;
+    private String quantiteParUnite; //can be NULL
     private double prixUnitaire;
     private int unitesEnStock;
     private int unites_Commandees;
@@ -69,11 +69,19 @@ public class Produit {
     public int getUnitesEnStock() {
         return unitesEnStock;
     }
+    
+    public int getUnitesCommandees() {
+        return unites_Commandees;
+    }
 
     public int getNiveauReaprovi() {
         return niveauReaprovi;
     }
-
+    
+    public int getIndisponibilite() {
+        return (indisponible ? 1 : 0);
+    }
+    
     public boolean isIndisponible() {
         return indisponible;
     }
@@ -124,9 +132,9 @@ public class Produit {
         return true;
     }
     
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Produit{" + "reference= " + reference + ",\n nom= " + nProduit + ",\n fournisseur= " + fournisseur + ",\n categorie= " + categorie + ",\n quantite_par_unite= " + quantiteParUnite + ",\n prix_unitaire= " + prixUnitaire + ",\n unites_en_stock= " + unitesEnStock + ",\n unites_commandes= " + unites_Commandees + ",\n niveau_reaprovis= " + niveauReaprovi + ",\n indisponible= " + indisponible + '}';
+    }
     
 }

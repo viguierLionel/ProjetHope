@@ -23,6 +23,38 @@ public class DAO {
 		this.myDataSource = dataSource;
 	}
         
+        //CLIENT ****************************************************************************************************************************
+        
+        /**
+         * Permet d'avoir une liste de tout les clients
+         * @return liste de tout les clients
+         * @throws SQLException 
+         */
+        public List<Client> allClients() throws SQLException {
+        List<Client> result = new ArrayList<>();
+        String sql = "SELECT * FROM CLIENT";
+        
+        try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+                            String code = rs.getString("CODE");
+                            String societe = rs.getString("SOCIETE");
+                            String contact = rs.getString("CONTACT");
+                            String fonction = rs.getString("FONCTION");
+                            String adresse = rs.getString("ADRESSE");
+                            String ville = rs.getString("VILLE");
+                            String region = rs.getString("REGION");
+                            String codePostal = rs.getString("CODE_POSTAL");
+                            String pays = rs.getString("PAYS");
+                            String telephone = rs.getString("TELEPHONE");
+                            String fax = rs.getString("FAX");
+                            Client c = new Client(code, societe, contact, fonction, adresse, ville, region, codePostal, pays, telephone, fax);
+                            result.add(c);
+            }
+        }
+        return result;
+    }
         
         /**
          * Permet d'avoir le code d'un client en fonction de Contact  
@@ -46,6 +78,7 @@ public class DAO {
             
             return result;
         }
+        
         
         //PRODUIT ****************************************************************************************************************************
         
@@ -110,7 +143,7 @@ public class DAO {
         /**
          * Permet d'avoir une tout les produits
          * @return liste de tout les produits
-         * @throws SQLEXCEPTION 
+         * @throws SQLException
          */
         public List<Produit> allProducts() throws SQLException {
             
@@ -184,24 +217,102 @@ public class DAO {
         }
         
         /**
-         * Permet de supprimer un produit
+         * 
+         * @param produit
+         * @return le nombre d'enregistrements réalisé (1 ou 0 si non realisé)
+         * @throws SQLException 
+         */
+        public int addProduct(Produit produit) throws SQLException {
+            String sql = "INSERT INTO PRODUIT(REFERENCE,NOM,FOURNISSEUR,CATEGORIE,QUANTITE_PAR_UNITE,PRIX_UNITAIRE,UNITES_EN_STOCK,UNITES_COMMANDEES,NIVEAU_DE_REAPPRO,INDISPONIBLE)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?)";
+            
+            try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+                ) {
+                        // Définir les valeurs du paramètre
+			stmt.setInt(1, produit.getReference());
+                        stmt.setString(2, produit.getnProduit());
+                        stmt.setInt(3, produit.getFournisseur());
+                        stmt.setInt(4, produit.getCategorie());
+                        stmt.setString(5, produit.getQuantiteParUnite());
+                        stmt.setDouble(6, produit.getPrixUnitaire());
+                        stmt.setInt(7, produit.getUnitesEnStock());
+                        stmt.setInt(8, produit.getUnitesCommandees());
+                        stmt.setInt(9, produit.getNiveauReaprovi());
+                        stmt.setInt(10, produit.getIndisponibilite());
+			
+			return stmt.executeUpdate();
+		}
+        }
+        
+        /**
+         * Permet d'enregistrer les modifications d'un produit
+         * @param produit
+         * @return si la modification a été réalisé ou non ( 0 si ce n'est pas le cas)
+         * @throws SQLException 
+         */
+        public int majModProduct(Produit produit) throws SQLException {
+            String sql = " UPDATE PRODUIT SET NOM= ? ,FOURNISSEUR= ? ,CATEGORIE= ? ,QUANTITE_PAR_UNITE = ? ,PRIX_UNITAIRE = ? ,UNITES_EN_STOCK = ?,UNITES_COMMANDEES = ?,"
+                    + "NIVEAU_DE_REAPPRO= ? ,INDISPONIBLE = ? WHERE REFERENCE= ? ";
+            
+            try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+                ) {
+                        // Définir les valeurs du paramètre
+                        stmt.setString(1, produit.getnProduit());
+                        stmt.setInt(2, produit.getFournisseur());
+                        stmt.setInt(3, produit.getCategorie());
+                        stmt.setString(4, produit.getQuantiteParUnite());
+                        stmt.setDouble(5, produit.getPrixUnitaire());
+                        stmt.setInt(6, produit.getUnitesEnStock());
+                        stmt.setInt(7, produit.getUnitesCommandees());
+                        stmt.setInt(8, produit.getNiveauReaprovi());
+                        stmt.setInt(9, produit.getIndisponibilite());
+                        stmt.setInt(10,produit.getReference());
+			
+			return stmt.executeUpdate();
+		}
+            
+        }
+        
+        
+        /**
+         * Permet de supprimer un produit après avoir supprimé les lignes où se produit etait
+         * utilisé (problème de fk) 
          * @param nProduit 
          * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
          * @throws SQLException
          */
         public int delProduct(int reference) throws SQLException {
-            
-            String sql = "DELETE FROM LIGNE WHERE PRODUIT = ?; DELETE FROM PRODUIT WHERE reference = ?";;
-            
+            String sql = "DELETE FROM PRODUIT WHERE reference = ?";
+            delProductAux(reference);
 		try (   Connection connection = myDataSource.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql)
                 ) {
                         // Définir la valeur du paramètre
 			stmt.setInt(1, reference);
-                        stmt.setInt(2, reference);
 			
 			return stmt.executeUpdate();
 
+		}
+
+        }
+        
+        /**
+         * Permet de supprimer des lignes
+         * @param reference
+         * @return le nombre de lignes détruites (0 si non trouvé)
+         * @throws SQLException 
+         */
+        public int delProductAux(int reference) throws SQLException {
+             String sql = "DELETE FROM LIGNE WHERE PRODUIT = ?";
+		try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+                ) {
+                        // Définir la valeur du paramètre
+			stmt.setInt(1, reference);
+			
+			return stmt.executeUpdate();
 		}
         }
 

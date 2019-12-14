@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 public class DAOTest {
     
     private DataSource myDataSource;
-    private static Connection myConnection ;
+    private Connection myConnection ;
     private DAO dao;
     
     	@Before
@@ -71,7 +71,7 @@ public class DAOTest {
     }
         
     @Test
-    public void selectNomProduct() throws SQLException{
+    public void selectNomProductTest() throws SQLException{
         assertEquals(8,dao.selectNomProduct("le").size());
     }
     
@@ -83,6 +83,27 @@ public class DAOTest {
     @Test
     public void allProductsFromCatTest() throws SQLException{
         assertEquals(12,dao.allProductsFromCat("Boi").size());
+    }
+    
+    @Test
+     public void addProductTest() throws SQLException{
+        Produit produit = new Produit(100,"Pickle juice", 1, 1, "3 bottles ", 4.20, 69, 0, 10, 0);
+        dao.addProduct(produit);
+        assertEquals(dao.selectProduct(100),produit);
+    }
+    
+     @Test
+     public void majModProductTest() throws SQLException{
+        Produit produit = new Produit(100,"Pickle juice", 1, 1, "3 bottles ", 4.20, 69, 0, 10, 0);
+        Produit produitModif = new Produit(100,"Pickle juice", 1, 1, "4 bottles ", 4.20, 69, 0, 10, 0);
+        dao.addProduct(produit);
+        dao.majModProduct(produitModif);
+        assertEquals(dao.selectProduct(100),produitModif);
+    }
+     
+    @Test
+    public void delProductAuxTest() throws SQLException {
+        assertEquals(1,dao.delProduct(1));
     }
     
     @Test
