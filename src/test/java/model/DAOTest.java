@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
 import org.hsqldb.cmdline.SqlFile;
@@ -178,6 +179,23 @@ public class DAOTest {
         assertEquals(commande,dao.selectCommande(11400));
     }
     
+    @Test
+     public void majModCommandeTest() throws SQLException{
+        Commande commande= new Commande(11400, "VINET", "2020-04-20","2020-09-30",420.00,"La chancla",
+                "22 avenue j'ai plus d'idée","Albi", "TR","81000","France",0.00);
+        Commande commandeModif= new Commande(11400, "VINET", "2020-04-20","2020-09-30",420.00,"el bagnador",
+                "23 avenue toujours pas d'idée","Rodez", "AV","12000","France",0.00);
+        dao.addCommande(commande);
+        assertEquals(dao.selectCommande(11400),commande);
+        dao.majModCommande(commandeModif);
+        assertEquals(dao.selectCommande(11400),commandeModif);
+    }
+    
+    @Test
+    public void delCommandeTest() throws SQLException {
+        assertEquals(1,dao.delCommande(10248));
+    }
+    
     //CATEGORIE ****************************************************************************************************************************
     
     @Test
@@ -201,6 +219,64 @@ public class DAOTest {
     public void descriptionCategorieTest() throws SQLException {
         assertEquals(dao.descriptionCategorie(7),"Fruits secs, raisins, autres");
     }
+    
+    //LIGNE ****************************************************************************************************************************
+    
+    @Test
+    public void allLignesTest() throws SQLException {
+        assertEquals(2155,dao.allLignes().size());
+    }
+    
+    @Test
+    public void selectLignesCommandeTest() throws SQLException {
+        List<Ligne> listeLignes = new LinkedList();
+        Ligne la = new Ligne(10248,11,12);
+        Ligne lb = new Ligne(10248,42,10);
+        Ligne lc = new Ligne(10248,72,5);
+        listeLignes.add(la);
+        listeLignes.add(lb);
+        listeLignes.add(lc);
+        assertEquals(listeLignes,dao.selectLignesCommande(10248));
+    }
+    
+    @Test
+    public void selectProduitsCommandeTest() throws SQLException{
+        List<Integer> listeProduits = new LinkedList<Integer>();
+        listeProduits.add(46);
+        assertEquals(listeProduits,dao.selectProduitsCommande(10428));
+    }
+    
+     @Test
+    public void addLigneTest() throws SQLException{
+        List<Ligne> listeLignes = new LinkedList();
+        Ligne la = new Ligne(10428,46,20);
+        Ligne ligneAjoute = new Ligne(10428,59,3);
+        listeLignes.add(la);
+        listeLignes.add(ligneAjoute);
+        dao.addLigne(ligneAjoute);
+        assertEquals(listeLignes,dao.selectLignesCommande(10428));
+    }
+    
+    @Test
+     public void majModLigneTest() throws SQLException{
+        List<Ligne> listeLignes = new LinkedList();
+        Ligne ligneModif = new Ligne(10428,46,22);
+        listeLignes.add(ligneModif);
+        dao.majModLigne(ligneModif);
+        assertEquals(dao.selectLignesCommande(10428),listeLignes);
+    }
+    
+    @Test
+    public void delLigneTest() throws SQLException {
+        List<Ligne> listeLignes = new LinkedList();
+        Ligne la = new Ligne(10248,11,12);
+        Ligne lb = new Ligne(10248,72,5);
+        listeLignes.add(la);
+        listeLignes.add(lb);
+        dao.delLigne(10248,42);
+        assertEquals(listeLignes,dao.selectLignesCommande(10248));
+    }
+    
     
     //********************************************************************************
     
