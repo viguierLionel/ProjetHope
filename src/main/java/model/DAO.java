@@ -198,6 +198,37 @@ public class DAO {
         }
         return resultat;
     }
+    
+    /**
+     * Permet d'avoir un produit en fonction de son nom
+     * @param nom
+     * @return
+     * @throws SQLException 
+     */
+    public Produit selectProductWithNom(String nom) throws SQLException {
+        Produit resultat = null;
+         String sql = "SELECT * FROM PRODUIT WHERE NOM = ? ";
+         try (Connection connection = myDataSource.getConnection(); 
+                 PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    stmt.setString(1, nom);
+                    ResultSet rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        int reference=rs.getInt("REFERENCE");
+                        int fournisseur=rs.getInt("FOURNISSEUR");
+                        int categorie=rs.getInt("CATEGORIE");
+                        String quantiteParUnite=rs.getString("QUANTITE_PAR_UNITE");
+                        double prixUnitaire=rs.getDouble("PRIX_UNITAIRE");
+                        int unitesEnStock=rs.getInt("UNITES_EN_STOCK");
+                        int unites_Commandees=rs.getInt("UNITES_COMMANDEES");
+                        int niveauReaprovi=rs.getInt("NIVEAU_DE_REAPPRO");
+                        int indispo=rs.getInt("INDISPONIBLE");
+                        Produit p = new Produit(reference,nom,fournisseur,categorie,quantiteParUnite,prixUnitaire,
+                                                    unitesEnStock,unites_Commandees,niveauReaprovi,indispo);
+                        resultat = p;
+                    }
+        }
+        return resultat;
+    }
 
     /**
      * permet d'avoir une liste de produits dont le nom possède le mot clé entré en argument

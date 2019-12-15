@@ -43,8 +43,8 @@ public class LoginController extends HttpServlet {
 	String passwd = request.getParameter("passwd");// pour recuperer le nom d'utilisateur
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			if(dao.login(username,passwd)){
-                            if(dao.estAdmin(passwd)){
+			if(dao.compteExiste(username,passwd)!=0){
+                            if(dao.compteExiste(username,passwd)==2){
                             request.getRequestDispatcher("MainAdmin.jsp").forward(request, response);
                             }
                             else{ request.getRequestDispatcher("MainClient.jsp").forward(request, response);}

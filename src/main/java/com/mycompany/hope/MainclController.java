@@ -43,7 +43,7 @@ public class MainclController extends HttpServlet {
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
                         request.setAttribute("Categorie", dao.allCategories());
-			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
+			request.setAttribute("Produit", dao.allProductsFromCat(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
 			
                         switch (action) {
 				case "DECONNEXION": // lien vers la page du visiteur

@@ -41,10 +41,9 @@ public class VisiteurController extends HttpServlet {
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
 	String cat = request.getParameter("catego");// pour recuperer la catégorie du volet déroulant Categorie
 		try {
-                        
+                        DAO dao = new DAO(DataSourceFactory.getDataSource());
                         request.setAttribute("Categorie", dao.allCategories());
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Produit", dao.allProducts(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
+			request.setAttribute("Produit", dao.allProductsFromCat(cat)); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
 			switch (action) {
 				case "CONNEXION": // Requête d'ajout (vient du formulaire de saisie)
 					request.getRequestDispatcher("Visiteur/Connexion.jsp").forward(request, response);						

@@ -40,13 +40,13 @@ public class AjoutclController extends HttpServlet {
 		try {
                     
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        request.setAttribute("Articles", dao.Products(a));//prend un string envoie un produit
+                        request.setAttribute("Articles", dao.selectNomProduct(a));//prend un string envoie un produit
                         switch (action) {
 				case "RETOUR": // lien vers la page du visiteur
 					request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);						
 					break;
 				case "AJOUTER": // lien vers l'ajout au panier
-                                        if(dao.Commandable(nb,a))//methode a créer...
+                                        if(dao.selectProductWithNom(a).getIndisponibilite()!=1)//methode a créer...
                                             {dao.ajoutPanier(nb,a);
                                             request.setAttribute("Message", "l'objet a bien été ajouter au caddie.");
                                         }
