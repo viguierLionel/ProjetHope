@@ -1,3 +1,18 @@
+tousLesObjets {
+   background-color: #A0D4FF;
+   border-radius: 20px;
+   display: flex;
+   flex-direction: row;
+   align-items: baseline;
+}
+
+.liste{
+  background-color: #F3EBF6;
+  width: 500px;
+  border: 15px solid #2B9CEA;
+  border-radius: 10px;
+}
+
 .logo{
     display: block;
     margin-left: auto;
@@ -9,13 +24,19 @@
         background-color: #F3EBF6;
         width: 400px;
         height: 400px;
-        margin: 5em auto;
+        
         border-radius: 1.5em;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
     }
     
+    .objet {
+        color: #2b6df2;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+    }  
     .sign {
-        padding-top: 40px;
+        padding-top: 20px;
         color: #2b6df2;
         font-family: 'Ubuntu', sans-serif;
         font-weight: bold;
@@ -35,10 +56,9 @@
     outline: none;
     box-sizing: border-box;
     border: 2px solid rgba(0, 0, 0, 0.02);
-    margin-bottom: 50px;
-    margin-left: 46px;
+    margin-top: 10px;
+    margin-left: 30px;
     text-align: center;
-    margin-bottom: 27px;
     font-family: 'Ubuntu', sans-serif;
     }
     
@@ -67,7 +87,7 @@
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
     
-    .retour {
+    .redirect {
       cursor: pointer;
         border-radius: 5em;
         color: #fff;
@@ -82,22 +102,7 @@
         font-size: 13px;
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
-    
-    .inscription {
-      cursor: pointer;
-        border-radius: 5em;
-        color: #fff;
-        background: linear-gradient(to left, #2b6df2, #0e3584);
-        border: 0;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        font-family: 'Ubuntu', sans-serif;
-        margin-left: 70px;
-        font-size: 13px;
-        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-    }
+
     a {
         text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
         color: #E1BEE7;
@@ -108,3 +113,38 @@
             border-radius: 0px;
         }
     }
+    
+    * {margin: 0; padding: 0;}
+ 
+div {
+  margin: 20px;
+}
+ 
+ul {
+  list-style-type: none;
+  width: 500px;
+}
+ 
+h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+ 
+li img {
+  float: left;
+  margin: 0 15px 0 0;
+}
+ 
+li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+ 
+li {
+  padding: 10px;
+  overflow: auto;
+}
+ 
+li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
