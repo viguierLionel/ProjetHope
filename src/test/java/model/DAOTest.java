@@ -273,7 +273,7 @@ public class DAOTest {
         Ligne lb = new Ligne(10248,72,5);
         listeLignes.add(la);
         listeLignes.add(lb);
-        dao.delLigne(10248,42);
+        assertEquals(1,dao.delLigne(10248,42));
         assertEquals(listeLignes,dao.selectLignesCommande(10248));
     }
     
