@@ -14,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAO;
+import model.Client;
 import model.DataSourceFactory;
 
 /**
@@ -47,10 +49,26 @@ public class EditclControlleur extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
+        HttpSession session=request.getSession();
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			//request.setAttribute("Donne", dao.DoneeClient()); 
+			request.setAttribute("Donne", dao.DoneeClient(session.getAttribute("login"))); 
                         switch (action) {
+                            case "MODIFIER":
+                                String code  = request.getParameter("code");
+                                String societe  = request.getParameter("societe");
+                                String contact  = request.getParameter("contact");
+                                String fonction  = request.getParameter("fonction");
+                                String adresse  = request.getParameter("adresse");
+                                String ville  = request.getParameter("ville");
+                                String region  = request.getParameter("region");
+                                String codePostal  = request.getParameter("codePostal");
+                                String pays  = request.getParameter("pays");
+                                String telephone  = request.getParameter("telephone");
+                                String fax  = request.getParameter("fax");
+                                Client c = new Client(code,societe,contact,fonction,adresse,ville,region,codePostal,pays,telephone,fax);
+                                request.setAttribute("Message Ajout", dao.majModClient(c));
+                                break;
                             case "RETOUR":
                                 request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);
                                 break;
