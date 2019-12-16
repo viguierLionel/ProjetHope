@@ -47,7 +47,7 @@ public class AjoutclController extends HttpServlet {
 					break;
 				case "AJOUTER": // lien vers l'ajout au panier
                                         if(dao.selectProductWithNom(a).getIndisponibilite()!=1)//methode a créer...
-                                            {dao.ajoutPanier(nb,a);
+                                            {//dao.ajoutPanier(nb,a);
                                             request.setAttribute("Message", "l'objet a bien été ajouter au caddie.");
                                         }
                                         else{

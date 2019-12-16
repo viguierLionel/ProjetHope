@@ -49,7 +49,7 @@ public class TrolleyController extends HttpServlet {
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Caddie", dao.Caddie()); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
+			//request.setAttribute("Caddie", dao.Caddie()); // allProduct renvoi une liste de produit d'une catégorie, si cat = null => revoie tous les produits
 			
                         switch (action) {
 				case "VALIDER": 

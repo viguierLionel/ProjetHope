@@ -49,7 +49,7 @@ public class EditclControlleur extends HttpServlet {
 	action = (action == null) ? "" : action; // Pour le switch qui n'aime pas les null
 		try {
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-			request.setAttribute("Donne", dao.DoneeClient()); 
+			//request.setAttribute("Donne", dao.DoneeClient()); 
                         switch (action) {
                             case "RETOUR":
                                 request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);
