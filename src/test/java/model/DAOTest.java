@@ -93,6 +93,13 @@ public class DAOTest {
     }
     
     @Test
+    public void addClientTest() throws SQLException{
+        Client client = new Client("ALOOF", "Alo OFeu", "Mario Ersand", "Représentant(e)", "Obere Str. 58", "Berlin", null, "12209     ", "Allemagne", "030-0074322", "030-0076546");
+        dao.addClient(client);
+        assertEquals(client,dao.selectClient("ALOOF"));
+    }
+    
+    @Test
     public void majModClientTest() throws SQLException{
         //nouvelles informations à maj du client
         Client clientModif = new Client("ALFKI","Alfreds Futterkiste","Maria Anders","Représentant(e)","Obere Str. 57",

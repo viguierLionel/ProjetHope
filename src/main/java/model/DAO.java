@@ -136,6 +136,36 @@ public class DAO {
         }
         return resultat;
     }
+    
+    /**
+     * Permet d'ajouter un nouveau client
+     * @param client
+     * @return le nombre d'enregistrements réalisé (1 ou 0 si non realisé)
+     * @throws SQLException 
+     */
+    public int addClient(Client client) throws SQLException {
+        String sql = "INSERT INTO CLIENT(CODE,SOCIETE,CONTACT,FONCTION,ADRESSE,VILLE,REGION,CODE_POSTAL,PAYS,TELEPHONE,FAX) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try (   Connection connection = myDataSource.getConnection();
+                    PreparedStatement stmt = connection.prepareStatement(sql)
+            ) {
+                    // Définir les valeurs du paramètre
+                    stmt.setString(1, client.getCode());
+                    stmt.setString(2, client.getSociete());
+                    stmt.setString(3, client.getContact());
+                    stmt.setString(4, client.getFonction());
+                    stmt.setString(5, client.getAdresse());
+                    stmt.setString(6, client.getVille());
+                    stmt.setString(7, client.getRegion());
+                    stmt.setString(8, client.getCodePostal());
+                    stmt.setString(9, client.getPays());
+                    stmt.setString(10, client.getTelephone());
+                    stmt.setString(11, client.getFax());
+
+                    return stmt.executeUpdate();
+            }
+    }
 
     /**
      * Permet d'enregistrer les modifications d'un client
