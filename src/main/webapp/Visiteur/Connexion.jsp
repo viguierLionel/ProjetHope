@@ -11,6 +11,7 @@
     
     <body>
         <img src ="../Images/LogoEcoPlusPlus.png" alt="ECO PLUS PLUS" class="logo">
+        <p class="message">${Message}</p>
         
         <div class="main">
             <p class="sign" align="center">Connectez-vous</p>
