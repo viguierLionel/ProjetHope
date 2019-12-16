@@ -55,7 +55,7 @@ public class Inscription extends HttpServlet {
                                 String pays  = request.getParameter("pays");
                                 String telephone  = request.getParameter("telephone");
                                 String fax  = request.getParameter("fax");
-                                int x = dao.addClient(pwd,societe,contact,fonction,adresse,ville,region,codePostal,pays,telephone,fax);
+                                /*int x = dao.addClient(pwd,societe,contact,fonction,adresse,ville,region,codePostal,pays,telephone,fax);
                                 
                                     
                                         if(x == 1){
@@ -64,7 +64,7 @@ public class Inscription extends HttpServlet {
                                         }
                                         else{
                                         request.setAttribute("Message Ajout", "une erreur est survenue lors de la création du compte");
-                                        }
+                                        }*/
 					break;
                                 case "RETOUR":
 					request.getRequestDispatcher("Visiteur/Main.jsp").forward(request, response);
