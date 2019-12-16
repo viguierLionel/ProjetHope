@@ -24,6 +24,7 @@
   </div>
 </nav>    
             <img src ="../Images/LogoEcoPlusPlus.png" alt="ECO PLUS PLUS" class="logo">
+            <p class="message">${Message}</p>
     	<div>
             <form>
                   <p>
