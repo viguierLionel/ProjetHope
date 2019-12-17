@@ -59,7 +59,7 @@ public class Inscription extends HttpServlet {
                                 
                                     
                                         if(x == 1){
-                                            session.setAttribute("Login", pwd);
+                                        session.setAttribute("Login", pwd);
 					request.getRequestDispatcher("Client/Maincl.jsp").forward(request, response);
                                         }
                                         else{
